@@ -1,0 +1,50 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Output of go build
+/build/
+/bin/
+/dist/
+*.run
+*.local
+
+# Dependency directories (vendor/)
+vendor/
+
+# Go workspace files
+go.sum
+go.work
+go.work.sum
+
+# IDE/editor folders
+.vscode/
+.idea/
+*.swp
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+*.old
+*.swp
+.DS_Store
+
+# Air (Go live reloading tool)
+tmp/
+.air.toml
+
+# Node-related if using HTMX with frontend assets
+node_modules/
+client/node_modules/
+client/dist/
+client/.vite/
+
+# Environment variables
+.env
+.env.*

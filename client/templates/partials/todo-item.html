@@ -1,0 +1,22 @@
+<div class="todo-item {{if .Completed}}completed{{end}}" id="todo-{{.ID}}">
+    <div class="todo-content">
+        <input
+           type="checkbox"
+           {{if .Completed}}checked{{end}}
+           hx-put="/todos/toggle/{{.ID}}"
+           hx-target="#todo-{{.ID}}"
+           hx-swap="outerHTML"
+        >
+        <span class="todo-title">{{.Title}}</span>
+
+    </div>
+    <button class="delete-btn"
+        hx-delete="/todos/{{.ID}}"
+        hx-target="#todo-{{.ID}}"
+        hx-swap="outerHTML"
+        hx-confirm="Are you sure you want to delete this todo?"
+
+    >
+        Delete
+    </button>
+</div>

@@ -1,0 +1,32 @@
+{{template "base" .}}
+{{define "embed"}}
+
+<div class="todo-app">
+    <h1>Todo App</h1>
+
+    <form
+        hx-post="/todos"
+        hx-target="#todo-list"
+        hx-swap="afterbegin"
+        class="todo-form"
+        >
+        <input type="text" name="title" placeholder="Enter a new todo..." required>
+        <button type="submit">Add Todo</button>
+
+    </form>
+
+
+
+
+    <div id="todo-list" class="todo-list">
+        {{ if .Empty }}
+        <p>No todos yet. 🎉 Add one above!</p>
+        {{ else }}
+
+        {{range .Todos}}
+            {{template "partials/todo-item" .}}
+        {{end}}
+    </div>
+    {{end}}
+</div>
+{{end}}
