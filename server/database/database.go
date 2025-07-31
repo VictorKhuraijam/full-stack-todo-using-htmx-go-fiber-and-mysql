@@ -29,11 +29,14 @@ func createTable(db *sql.DB) {
 func Connect(cfg *config.Config) (*sql.DB, error) {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
         cfg.DBUser, cfg.DBPassword, cfg.DBHost, cfg.DBPort, cfg.DBName)
+
+	fmt.Println(dsn)
 	db, err := sql.Open("mysql", dsn)
 	if err != nil{
 		return nil,err
 	}
 
+	fmt.Println(db)
 	createTable(db)
 
 	if err = db.Ping(); err != nil{

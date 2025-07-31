@@ -43,6 +43,22 @@ func (h *TodoHandler) Create(c *fiber.Ctx) error  {
 	return c.Render("partials/todo-item",todo)
 }
 
+// func (h *TodoHandler) GetTodo(c *fiber.Ctx) error  {
+// 	id, err := strconv.Atoi(c.Params("id"))
+// 	if err != nil {
+// 		return c.Status(400).SendString("Invalid Id")
+// 	}
+
+// 	todo, err := h.service.GetByID(id)
+// 	if err != nil{
+// 		return c.Status(500).SendString("Error getting todo")
+// 	}
+
+// 	log.Printf("get todo: %+v\n", todo)
+
+// 	return c.Render("partials/todo-item", todo)
+// }
+
 func (h *TodoHandler) Toggle(c *fiber.Ctx) error  {
 	id, err := strconv.Atoi(c.Params("id"))
 	if err != nil{
@@ -56,6 +72,55 @@ func (h *TodoHandler) Toggle(c *fiber.Ctx) error  {
 
 	log.Printf("Toggled todo: %+v\n", todo)
 
+	return c.Render("partials/todo-item", todo)
+}
+
+func (h *TodoHandler) EditForm(c *fiber.Ctx) error {
+	id, err := strconv.Atoi(c.Params("id"))
+	if err != nil {
+		return c.Status(400).SendString("Invalid ID")
+	}
+
+	todo, err := h.service.GetByID(id)
+	if err != nil {
+		return c.Status(500).SendString("Todo not found")
+	}
+
+	return c.Render("partials/todo-edit", todo)
+}
+
+
+func (h *TodoHandler) Update(c *fiber.Ctx) error {
+	id, err := strconv.Atoi(c.Params("id"))
+	if err != nil {
+		log.Println("Invalid ID:", err)
+		return c.Status(400).SendString("Invalid ID")
+	}
+
+	title := c.FormValue("title")
+	log.Println("Title:", title)
+	if title == ""{
+		return c.Status(400).SendString("Title is required")
+	}
+
+	completedStr := c.FormValue("completed")
+	log.Println("Completed (raw):", completedStr)
+
+	// completed, err := strconv.ParseBool(completedStr)
+	// if err != nil{
+	// 	return c.Status(400).SendString("Invalid value for completed")
+	// }
+	completed := completedStr == "true"
+	log.Println("Completed (parsed):", completed)
+
+
+	todo, err := h.service.UpdateTodo(id, title, completed)
+	if err != nil {
+		log.Println("Update failed:", err)
+		return c.Status(500).SendString("Error updating Todo")
+	}
+
+	log.Printf("Updated todo: %+v\n", todo)
 	return c.Render("partials/todo-item", todo)
 }
 

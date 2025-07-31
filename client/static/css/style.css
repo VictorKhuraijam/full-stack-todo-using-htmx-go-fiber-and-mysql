@@ -24,6 +24,13 @@ body {
     padding: 30px;
 }
 
+.todo-edit{
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
 h1{
     text-align: center;
     color: #2c3e50;
@@ -32,6 +39,12 @@ h1{
 }
 
 .todo-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.todo-form1 {
     display: flex;
     gap: 10px;
     margin-bottom: 30px;
@@ -83,6 +96,17 @@ h1{
     transition: all 0.3s;
 }
 
+.todo-edit {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 4px solid #3498db;
+    transition: all 0.3s;
+}
+
 .todo-item:hover {
     transform: translateX(5px);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -125,6 +149,22 @@ h1{
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.3s;
+}
+
+.update-btn {
+    padding: 8px 16px;
+    margin-right: 5px;
+    background: #5dc942;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.update-btn:hover{
+    background: #206b0d;
 }
 
 .delete-btn:hover {

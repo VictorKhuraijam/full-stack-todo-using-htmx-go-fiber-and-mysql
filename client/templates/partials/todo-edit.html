@@ -1,0 +1,17 @@
+<div class=" todo-edit todo-app" id="todo-{{.ID}}">
+    <form
+        hx-put="/todos/update/{{.ID}}"
+        hx-target="#todo-{{.ID}}"
+        hx-swap="outerHTML"
+        class="todo-form"
+        >
+        <input type="checkbox" name="completed" value="true" {{if .Completed}}checked{{end}}>
+        <input
+            type="text"
+            name="title"
+            value="{{.Title}}"
+            required
+        >
+        <button type="submit">Save</button>
+    </form>
+</div>

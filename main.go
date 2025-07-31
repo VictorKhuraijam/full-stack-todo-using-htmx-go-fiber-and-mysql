@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 	"log"
-	"todo/internal/config"
-	"todo/internal/database"
-	"todo/internal/handlers"
-	"todo/internal/services"
+	"todo/server/config"
+	"todo/server/database"
+	"todo/server/handlers"
+	"todo/server/services"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -52,7 +52,9 @@ func main() {
 	//Routes
 	app.Get("/", todoHandler.Index)
 	app.Post("/todos", todoHandler.Create)
+	app.Get("/todos/:id", todoHandler.EditForm)
 	app.Put("/todos/toggle/:id", todoHandler.Toggle)
+	app.Put("/todos/update/:id", todoHandler.Update)
 	app.Delete("/todos/:id", todoHandler.Delete)
 
 	//Start server

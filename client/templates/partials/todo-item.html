@@ -10,6 +10,12 @@
         <span class="todo-title">{{.Title}}</span>
 
     </div>
+    <button class="update-btn"
+        hx-get="/todos/{{.ID}}"
+        hx-target="#todo-{{.ID}}"
+        hx-swap="outerHTML">
+        UPDATE
+    </button>
     <button class="delete-btn"
         hx-delete="/todos/{{.ID}}"
         hx-target="#todo-{{.ID}}"
