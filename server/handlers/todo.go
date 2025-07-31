@@ -3,7 +3,7 @@ package handlers
 import (
 	"log"
 	"strconv"
-	"todo/internal/services"
+"todo/server/services"
 
 	"github.com/gofiber/fiber/v2"
 )

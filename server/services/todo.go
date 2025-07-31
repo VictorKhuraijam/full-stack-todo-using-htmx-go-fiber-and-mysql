@@ -2,8 +2,8 @@ package services
 
 import (
 	"database/sql"
+	"todo/server/models"
 	// "log"
-	"todo/internal/models"
 )
 
 type TodoService struct {

@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"todo/internal/config"
+	"todo/server/config"
 
 	_ "github.com/go-sql-driver/mysql"
 )
