@@ -13,5 +13,11 @@
             required
         >
         <button type="submit">Save</button>
+        <button type="button"
+                hx-get="/todos/{{.ID}}?mode=view"
+                hx-target="#todo-{{.ID}}"
+                hx-swap="outerHTML">
+            Cancel
+        </button>
     </form>
 </div>

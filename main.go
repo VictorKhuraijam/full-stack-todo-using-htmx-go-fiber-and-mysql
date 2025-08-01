@@ -51,6 +51,7 @@ func main() {
 
 	//Routes
 	app.Get("/", todoHandler.Index)
+	// app.Get("/todos/todo/:id", todoHandler.GetTodo)
 	app.Post("/todos", todoHandler.Create)
 	app.Get("/todos/:id", todoHandler.EditForm)
 	app.Put("/todos/toggle/:id", todoHandler.Toggle)

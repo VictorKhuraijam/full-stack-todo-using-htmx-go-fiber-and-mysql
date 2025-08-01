@@ -3,7 +3,7 @@ package handlers
 import (
 	"log"
 	"strconv"
-"todo/server/services"
+	"todo/server/services"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -43,21 +43,21 @@ func (h *TodoHandler) Create(c *fiber.Ctx) error  {
 	return c.Render("partials/todo-item",todo)
 }
 
-// func (h *TodoHandler) GetTodo(c *fiber.Ctx) error  {
-// 	id, err := strconv.Atoi(c.Params("id"))
-// 	if err != nil {
-// 		return c.Status(400).SendString("Invalid Id")
-// 	}
+func (h *TodoHandler) GetTodo(c *fiber.Ctx) error  {
+	id, err := strconv.Atoi(c.Params("id"))
+	if err != nil {
+		return c.Status(400).SendString("Invalid Id")
+	}
 
-// 	todo, err := h.service.GetByID(id)
-// 	if err != nil{
-// 		return c.Status(500).SendString("Error getting todo")
-// 	}
+	todo, err := h.service.GetByID(id)
+	if err != nil{
+		return c.Status(500).SendString("Error getting todo")
+	}
 
-// 	log.Printf("get todo: %+v\n", todo)
+	log.Printf("get todo: %+v\n", todo)
 
-// 	return c.Render("partials/todo-item", todo)
-// }
+	return c.Render("partials/todo-edit", todo)
+}
 
 func (h *TodoHandler) Toggle(c *fiber.Ctx) error  {
 	id, err := strconv.Atoi(c.Params("id"))
@@ -84,6 +84,13 @@ func (h *TodoHandler) EditForm(c *fiber.Ctx) error {
 	todo, err := h.service.GetByID(id)
 	if err != nil {
 		return c.Status(500).SendString("Todo not found")
+	}
+
+	mode := c.Query("mode")
+
+	if mode == "view" {
+		// render the read-only todo-item view
+		return c.Render("partials/todo-item", todo)
 	}
 
 	return c.Render("partials/todo-edit", todo)
