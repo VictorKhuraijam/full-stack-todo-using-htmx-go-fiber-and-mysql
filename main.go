@@ -39,6 +39,8 @@ func main() {
 		Views: engine,
 	})
 
+
+
 	//Middleware
 	app.Use(logger.New())
 
