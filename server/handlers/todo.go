@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"log"
-	"strconv"
+	"log" // Used for logging errors or debugging info.
+	"strconv" //Used for converting string to int (like id params).
 	"todo/server/services"
 
 	"github.com/gofiber/fiber/v2"
@@ -132,7 +132,7 @@ func (h *TodoHandler) Update(c *fiber.Ctx) error {
 }
 
 func (h *TodoHandler) Delete(c *fiber.Ctx) error  {
-	id,err := strconv.Atoi(c.Params("id"))
+	id,err := strconv.Atoi(c.Params("id")) //Converts the URL parameter id from string to int.
 	if err != nil{
 		return c.Status(400).SendString("Invalid ID")
 	}
@@ -142,5 +142,6 @@ func (h *TodoHandler) Delete(c *fiber.Ctx) error  {
 		return c.Status(500).SendString("Error deleting todo")
 	}
 
-	return c.SendString("Todo Deleted")
+	// return c.SendString("Todo Deleted")
+	return nil
 }

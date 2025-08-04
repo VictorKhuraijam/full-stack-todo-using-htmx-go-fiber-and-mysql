@@ -15,15 +15,16 @@ import (
 
 func main() {
 	//Load configuration
-	cfg := config.Load()
+	cfg := config.Load() //oad DB/Server configs
 
 	//Connect to database
-	db, err := database.Connect(cfg)
+	db, err := database.Connect(cfg) //Connects to MySQL
 	if err != nil{
 		log.Fatal("Failed to connect to database:", err)
 	}
 	defer db.Close()
 
+	// check db conectivity
 	if err := db.Ping(); err != nil {
 		log.Fatal("Failed to ping database:", err)
 	}
@@ -31,25 +32,26 @@ func main() {
 	fmt.Println("✅ Connected to MySQL!")
 
 	//Initialize template engine
-	engine := html.New("./client/templates", ".html")
-	engine.Reload(true)
+	engine := html.New("./client/templates", ".html")//Initializes HTML rendering engine
+	engine.Reload(true) //enable live reloads(useful during development)
 
 	//Create Fiber app
-	app := fiber.New(fiber.Config{
-		Views: engine,
+	app := fiber.New(fiber.Config{ // 	Creates HTTP server
+		Views: engine, //to render HTML templates
 	})
 
 
 
 	//Middleware
+	//Adds a request logger middleware that prints method, path, status, and response time to the terminal for every HTTP request.
 	app.Use(logger.New())
 
 	//Static files
 	app.Static("/static", "./client/static")
 
 	//Initialize services and handlers
-	todoService := services.NewTodoService(db)
-	todoHandler := handlers.NewTodoHandler(todoService)
+	todoService := services.NewTodoService(db) //handles database operations (logic layer).
+	todoHandler := handlers.NewTodoHandler(todoService) // handles incoming HTTP requests and uses todoService to perform actual operations.
 
 	//Routes
 	app.Get("/", todoHandler.Index)
@@ -62,5 +64,5 @@ func main() {
 
 	//Start server
 	log.Printf("Server starting on port %s", cfg.Port)
-	log.Fatal(app.Listen(":" + cfg.Port))
+	log.Fatal(app.Listen(":" + cfg.Port)) // fiber http server starts
 }

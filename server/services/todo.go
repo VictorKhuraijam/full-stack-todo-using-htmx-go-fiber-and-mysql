@@ -11,26 +11,29 @@ type TodoService struct {
 	db *sql.DB
 }
 
+//constructor function - in go it’s idiomatic to name constructor functions as NewTypeName, like NewTodoService, NewUserRepo, NewAppConfig, etc.
+//to create and initialize a new instance of a struct.
 func NewTodoService(db *sql.DB) *TodoService  {
-	return &TodoService{db: db}
+	return &TodoService{db: db} // returns a pointer to the struct todoService
 }
 
 func (s *TodoService) GetAll() ([]models.Todo, error)  {
 	query := "SELECT * FROM todos ORDER BY created_at DESC"
     rows, err := s.db.Query(query)
-
+	// using db.Query(), Go opens a database cursor and keeps a connection open to allow you to read results.
+	//opens multiple rows
     if err != nil {
         return nil, err
     }
 
-    defer rows.Close()
+    defer rows.Close() //Releases DB connection + memory
 
-	var todos []models.Todo
-	for rows.Next(){
-		var todo models.Todo
-		 err := rows.Scan(&todo.ID, &todo.Title, &todo.Completed, &todo.CreatedAt, &todo.UpdatedAt)
+	var todos []models.Todo //Declares a slice to hold all the fetched todos.
+	for rows.Next(){ //moves the cursor to the next row in the result set.
+		var todo models.Todo //Creates a new Todo struct to store the current row.
+		 err := rows.Scan(&todo.ID, &todo.Title, &todo.Completed, &todo.CreatedAt, &todo.UpdatedAt)//maps column values into the struct fields.
+		 //& means we are passing a pointer to each field so Scan can populate it.
         if err != nil {
-
             return nil, err
         }
 		// log.Printf("Fetched Todo:%+v\n", todo)
@@ -41,7 +44,7 @@ func (s *TodoService) GetAll() ([]models.Todo, error)  {
 
 func (s *TodoService) GetByID(id int) (*models.Todo, error) {
 	query := "SELECT id, title, completed, created_at, updated_at FROM todos WHERE id = ?"
-    row := s.db.QueryRow(query, id)
+    row := s.db.QueryRow(query, id)//used to fetch single row
 
 	var todo models.Todo
 	err := row.Scan(&todo.ID, &todo.Title, &todo.Completed, &todo.CreatedAt, &todo.UpdatedAt)
