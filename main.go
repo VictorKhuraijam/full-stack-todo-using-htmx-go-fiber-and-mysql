@@ -15,7 +15,7 @@ import (
 
 func main() {
 	//Load configuration
-	cfg := config.Load() //oad DB/Server configs
+	cfg := config.Load() //Load DB/Server configs
 
 	//Connect to database
 	db, err := database.Connect(cfg) //Connects to MySQL
